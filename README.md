@@ -4,3 +4,5 @@ My repo for "R for Excel Users" workshop
 This repo is for my analysis at RStudio::conf(2020).
 
 We use the following data from the Santa Barbara Coastal Term Ecological Research and National  Oceanic and Atmospheric Administration in our analyses
+
+ Pull -> Stage -> Commit -> Push steps.
