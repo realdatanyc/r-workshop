@@ -7,24 +7,68 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readxl)
+library(here)
 ```
 
-## R Markdown
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+```{r setup, include=FALSE}
+ca_np <- read_csv(here("data", "ca_np.csv"))
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+names(ca_np)
+head(ca_np)
+summary(ca_np)
 
-```{r cars}
-summary(cars)
+ci_np <- read_excel(here("data", "ci_np.xlsx"))
+
+View(ci_np)
+
+names(ci_np)
+
+head(ci_np)
+
+summary(ci_np)
+
+ggplot(data = ci_np, aes(x = year, y = visitors)) +
+  geom_line()
+
+gg_base <- ggplot(data = ci_np, aes(x = year, y = visitors))
+
+
+gg_base
+
+gg_base +
+  geom_point()
+
+gg_base + 
+  geom_col()
+
+gg_base +
+  geom_area()
+
+
+gg_base +
+  geom_line(
+    color = "purple",
+    linetype = "dashed"
+  )
+
+gg_base + 
+  geom_point(color = "purple",
+             pch = 17,
+             size = 4,
+             alpha = 0.5)
+
+gg_base + 
+  geom_point(
+    aes(size = visitors,
+        color = visitors),
+    alpha = 0.5
+  )
+
+gg_base + 
+  geom_col(aes(fill = visitors))
+
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
