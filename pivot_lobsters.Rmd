@@ -1,0 +1,58 @@
+---
+title: "Pivot Lobsters"
+author: "Robert Lazo"
+date: "11/2/2021"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```
+## attach libraries
+library(tidyverse)
+library(readxl)
+library(here)
+library(skimr) # install.packages('skimr')
+library(kableExtra) # install.packages('kableExtra')
+
+## read in data
+lobsters <- read_xlsx(here("data/lobsters.xlsx"), skip=4)
+
+# summary, but not effective with character data
+summary(lobsters)
+
+
+lobsters %>%
+  group_by(year) %>%
+  summarize(count_by_year = n())
+  
+# what if you don't use group_by?
+lobsters %>%
+  summarize(count =  n())  
+
+#what if you only use group_by?
+lobsters %>%
+  group_by(year)
+  
+  
+lobsters  
+
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
