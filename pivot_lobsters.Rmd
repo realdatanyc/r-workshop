@@ -7,15 +7,7 @@ output: html_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
-```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```
 ## attach libraries
 library(tidyverse)
 library(readxl)
@@ -42,12 +34,89 @@ lobsters %>%
 lobsters %>%
   group_by(year)
   
+lobsters %>%
+  group_by(site, year) %>%
+  summarize(count_by_siteyear =  n())
   
-lobsters  
+  
+lobsters %>%
+  group_by(site, year) %>%
+  summarize(count_by_siteyear =  n(),
+            mean_size_mm = mean(size_mm))  
+  
+#remove the NAs  
+lobsters %>%
+  group_by(site, year) %>%
+  summarize(count_by_siteyear =  n(), 
+            mean_size_mm = mean(size_mm, na.rm=TRUE), 
+            sd_size_mm = sd(size_mm, na.rm=TRUE))  
+
+siteyear_summary <- lobsters %>%
+  group_by(site, year) %>%
+  summarize(count_by_siteyear =  n(), 
+            mean_size_mm = mean(size_mm, na.rm = TRUE), 
+            sd_size_mm = sd(size_mm, na.rm = TRUE))
+            
+            
+            
+## inspect our new variable 
+siteyear_summary             
+
+## make a table with our new variable
+siteyear_summary %>%
+  kable()
+
+## practice exercise // use median
+lobsters %>%
+  group_by(site, year) %>%
+  summarize(median_size_mm = median(size_mm, na.rm=TRUE))
+
+
+## solution:
+
+siteyear_summary <- lobsters %>%
+  group_by(site, year) %>%
+  summarize(count_by_siteyear =  n(), 
+            mean_size_mm = mean(size_mm, na.rm = TRUE), 
+            sd_size_mm = sd(size_mm, na.rm = TRUE), 
+            median_size_mm = median(size_mm, na.rm = TRUE))
+
+
+siteyear_summary
+
+
+## a ggplot option:
+ggplot(data = siteyear_summary, aes(x = year, y = median_size_mm, color = site)) +
+  geom_line() 
+
+ggsave(here("figures", "lobsters-line.png"))
+
+## another option:
+ggplot(siteyear_summary, aes(x = year, y = median_size_mm)) +
+  geom_col() +
+  facet_wrap(~site)
+
+ggsave(here("figures", "lobsters-col.png"))
 
 ```
 
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```
+
+  
+  
+"There are `r nrow(lobsters)` total lobsters included in this report.”   
+  
+```
+
 ## Including Plots
+
+
 
 You can also embed plots, for example:
 
