@@ -2,7 +2,7 @@
 
 
 
-[Getting Started With Data Science FILES](www.ibmpressbooks.com/title/9780133991024)
+[Getting Started With Data Science FILES](https://www.ibmpressbooks.com/title/9780133991024)
 
 You can use the [editor on GitHub](https://github.com/realdatanyc/r-workshop/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
 
